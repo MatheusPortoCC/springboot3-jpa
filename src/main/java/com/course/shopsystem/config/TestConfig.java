@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.course.shopsystem.entities.Category;
 import com.course.shopsystem.entities.Order;
+import com.course.shopsystem.entities.Product;
 import com.course.shopsystem.entities.User;
 import com.course.shopsystem.entities.enums.OrderStatus;
 import com.course.shopsystem.repositories.CategoryRepository;
 import com.course.shopsystem.repositories.OrderRepository;
+import com.course.shopsystem.repositories.ProductRepository;
 import com.course.shopsystem.repositories.UserRepository;
 
 @Configuration
@@ -29,6 +31,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public void run(String... args) throws Exception {
         // Generate three categories
@@ -37,6 +42,19 @@ public class TestConfig implements CommandLineRunner {
         Category c3 = new Category(null, "Computers");
 
         categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
+
+        // Generate three products
+        Product p1 = new Product(null, "iPhone", "", 900.0, "");
+        Product p2 = new Product(null, "Notebook", "", 1500.0, "");
+        Product p3 = new Product(null, "Computador", "", 2000.0, "");
+
+        p1.getCategories().add(c1);
+        p2.getCategories().add(c1);
+        p2.getCategories().add(c3);
+        p3.getCategories().add(c1);
+        p3.getCategories().add(c3);
+
+        productRepository.saveAll(Arrays.asList(p1, p2, p3));
 
         // Generate five users
         User u1 = new User(null, "Maria Brown", "maria@gmail", "988888888", "123456");
