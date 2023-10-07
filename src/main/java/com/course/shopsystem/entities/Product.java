@@ -92,6 +92,7 @@ public class Product implements Serializable {
         return categories;
     }
 
+    @JsonIgnore
 	public Set<Order> getOrders() {
 		Set<Order> set = new HashSet<>();
 		for (OrderItem x : items) {
