@@ -20,9 +20,9 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        Optional<User> obj = repository.findById(id);
+        Optional<User> user = repository.findById(id);
 
-        return obj.get();
+        return user.get();
     }
 
     public User insert(User user) {
@@ -31,5 +31,19 @@ public class UserService {
 
     public void delete(Long id) { 
         repository.deleteById(id);
+    }
+
+    public User update(Long id, User user) {
+        User userReferenced = repository.getReferenceById(id);
+
+        updateData(userReferenced, user);
+
+        return repository.save(userReferenced);
+    }
+
+    private void updateData(User userReferenced, User user) {
+        userReferenced.setName(user.getName());
+        userReferenced.setEmail(user.getEmail());
+        userReferenced.setPhone(user.getPhone());
     }
 }
