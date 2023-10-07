@@ -13,6 +13,8 @@ import com.course.shopsystem.repositories.UserRepository;
 import com.course.shopsystem.services.exceptions.DatabaseException;
 import com.course.shopsystem.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
     
@@ -44,11 +46,15 @@ public class UserService {
     }
 
     public User update(Long id, User user) {
-        User userReferenced = repository.getReferenceById(id);
+        try {
+            User userReferenced = repository.getReferenceById(id);
 
-        updateData(userReferenced, user);
+            updateData(userReferenced, user);
 
-        return repository.save(userReferenced);
+            return repository.save(userReferenced);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User userReferenced, User user) {
