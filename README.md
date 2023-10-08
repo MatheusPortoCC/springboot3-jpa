@@ -68,6 +68,5 @@ Atualiza um usuário
 Body: `{
     "name": "João",
     "email": "joao@github.com",
-    "phone": "421444",
-    "password": "123456"
+    "phone": "421444"
 }`
